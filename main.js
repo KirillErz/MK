@@ -17,6 +17,8 @@ function attack() {
     console.log(kirill.name + 'Fight...');
 }
 
+const arenas = document.querySelector('.arenas');
+
 function createPlayer(player, namePlayer, hp) {
 
     let player1 = document.createElement('div');
@@ -36,7 +38,7 @@ function createPlayer(player, namePlayer, hp) {
     player1.append(character);
     character.innerHTML = '<img src="http://reactmarathon-api.herokuapp.com/assets/scorpion.gif" />';
 
-    document.querySelector('.arenas').appendChild(player1);
+    arenas.appendChild(player1);
     
 };
 
