@@ -1,16 +1,20 @@
 const kirill = {
     name: 'kirill',
-    hp:1,
+    hp:100,
     img:'',
+    player: 1,
 };
 
 const julia = {
     name:'',
-    hp:1,
+    hp:100,
     img:'',
+    player: 1,
 };
 
 const weapon = [];
+
+const arenas =  document.querySelector('.arenas');
 
 
 function attack() {
@@ -37,7 +41,6 @@ function createPlayer(player, namePlayer, hp) {
     character.className = "character";
     player1.append(character);
     character.innerHTML = '<img src="http://reactmarathon-api.herokuapp.com/assets/scorpion.gif" />';
-
     arenas.appendChild(player1);
     
 };
