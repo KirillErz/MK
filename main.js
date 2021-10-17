@@ -1,49 +1,86 @@
+let arenas = document.querySelector('.arenas');
+const randomButton  =  document.querySelector('.button');
+
 const kirill = {
     name: 'kirill',
     hp:100,
-    img:'',
+    img:'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     player: 1,
+    attack: (name) =>  {
+        console.log(name + ' ' + 'Fight...');
+    }
 };
 
 const julia = {
-    name:'',
+    name:'julia',
     hp:100,
-    img:'',
-    player: 1,
+    img:'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
+    player: 2,
+    attack: (name) =>  {
+        console.log(name + ' ' + 'Fight...');
+    }
 };
 
 const weapon = [];
 
-const arenas =  document.querySelector('.arenas');
-
-
-function attack() {
-    console.log(kirill.name + 'Fight...');
+const createElement = (tag, className) => {
+    const $tag = document.createElement(tag);
+    if (className) {
+        $tag.classList.add(className);
+    }
+    
+    return $tag;
 }
 
-const arenas = document.querySelector('.arenas');
+function createPlayer(playerObj) {
 
-function createPlayer(player, namePlayer, hp) {
+    let player = createElement('div', 'player' + playerObj.player);
+    let progressbar = createElement('div', 'progressbar');
+    let life = createElement('div', 'life');
+    let name = createElement('div', 'name');
+    let character = createElement('div', 'character');
+    let img = createElement('img');
 
-    let player1 = document.createElement('div');
-    player1.className = "player1";
-    let progressbar = document.createElement('div');
-    progressbar.className = "progressbar";
-    player1.append(progressbar);
-    let life = document.createElement('div');
-    life.className = "life";
-    progressbar.append(life);
-    let name = document.createElement('div');
-    name.className = "name";
-    name.innerHTML = namePlayer;
-    progressbar.append(name);
-    let character = document.createElement('div');
-    character.className = "character";
-    player1.append(character);
-    character.innerHTML = '<img src="http://reactmarathon-api.herokuapp.com/assets/scorpion.gif" />';
-    arenas.appendChild(player1);
-    
+    img.src = playerObj.img;
+    name.innerText = playerObj.name;
+    life.style.width  = playerObj.hp + '%';
+
+
+
+
+    progressbar.appendChild(life);
+    progressbar.appendChild(name);
+
+    character.appendChild(img);
+
+    player.appendChild(character);
+    player.appendChild(progressbar);
+
+    return player;
 };
 
-createPlayer('player1', 'SCORPION', 50);
-createPlayer('player2', 'SUB-ZERO', 80);
+const playerLose = (name) => {
+    const loseTitle = createElement('div','loseTitle');
+    loseTitle.innerText = name + ' LOX'
+    return loseTitle;
+}
+
+function changeHP(player) {
+    let hp = document.querySelector('.player' + player.player + ' .life');
+    const random = Math.ceil(Math.random() * 20);
+    player.hp -= random;
+    hp.style.width = player.hp + '%';
+    console.log(hp.style.width, player.hp);
+    if(player.hp <= 0) {
+        arenas.appendChild(playerLose(player.name))
+        player.hp = 0;
+    }
+}
+
+randomButton.addEventListener('click', () => {
+    changeHP(kirill);
+    changeHP(julia);
+})
+
+    arenas.appendChild(createPlayer(kirill));
+    arenas.appendChild(createPlayer(julia));
